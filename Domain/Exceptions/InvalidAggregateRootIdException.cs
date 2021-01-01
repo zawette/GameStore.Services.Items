@@ -1,7 +1,7 @@
 ﻿using Domain.Exceptions;
 using System;
 
-namespace Domain.Entities
+namespace Domain.Exceptions
 {
     [Serializable]
     internal class InvalidAggregateRootIdException : DomainException

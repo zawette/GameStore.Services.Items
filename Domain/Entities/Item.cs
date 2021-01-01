@@ -25,9 +25,9 @@ namespace Domain.Entities
             Tags = tags;
         }
 
-        public static Item Create(Guid categoryId, string name, string description, IEnumerable<string> tags)
+        public static Item Create(Guid Id,Guid categoryId, string name, string description, IEnumerable<string> tags)
         {
-            var item = new Item(Guid.NewGuid(), categoryId, name,description, tags);
+            var item = new Item(Id, categoryId, name,description, tags);
             item.AddEvent(new ItemCreated(item));
             return item;
         }
