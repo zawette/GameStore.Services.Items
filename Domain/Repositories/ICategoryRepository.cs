@@ -2,7 +2,7 @@
 
 namespace Domain.Repositories
 {
-    public interface IItemRepository : IRepositoryBase<Item>
+    public interface ICategoryRepository : IRepositoryBase<Category>
     {
     }
 }

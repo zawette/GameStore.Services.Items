@@ -15,9 +15,9 @@ namespace Application.Commands
 
         public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
         {
-            private IItemRepository _repository;
+            private IRepositoryBase _repository;
 
-            public DeleteItemCommandHandler(IItemRepository repository)
+            public DeleteItemCommandHandler(IRepositoryBase repository)
             {
                 _repository = repository;
             }
