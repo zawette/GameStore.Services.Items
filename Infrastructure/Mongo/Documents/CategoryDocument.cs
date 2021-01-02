@@ -4,11 +4,12 @@ using System;
 
 namespace Infrastructure.Mongo.Documents
 {
-    internal class CategoryDocument
+    public class CategoryDocument
     {
         [BsonGuidRepresentation(GuidRepresentation.Standard)]
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+        public int Version { get; set; }
     }
 }
