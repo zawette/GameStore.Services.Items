@@ -1,10 +1,10 @@
 ﻿namespace Domain.Entities.Events
 {
-    public class ItemCreated : IDomainEvent
+    public class ItemDeleted : IDomainEvent
     {
         public Item item { get; }
 
-        public ItemCreated(Item item)
+        public ItemDeleted(Item item)
         {
             this.item = item;
         }

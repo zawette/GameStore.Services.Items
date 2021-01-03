@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Events;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Entities
@@ -31,6 +32,11 @@ namespace Domain.Entities
             var item = new Item(Id, categoryId, name, description, tags);
             item.AddEvent(new ItemCreated(item));
             return item;
+        }
+
+        public void Delete(Item item)
+        {
+            item.AddEvent(new ItemDeleted(item));
         }
     }
 }
