@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Domain.ValueObjects;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,6 @@ namespace Infrastructure.Mongo.Documents
 
         public IEnumerable<string> Tags { get; set; }
         public int Version { get; set; }
-        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

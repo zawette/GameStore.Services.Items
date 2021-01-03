@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Events;
+using Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace Domain.Entities
 {
     public class Item : AggregateRoot
     {
-        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double UnitPrice { get; set; }
@@ -18,11 +19,11 @@ namespace Domain.Entities
             private set => _tags = new HashSet<string>(value);
         }
 
-        public Item(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags, double unitPrice, int version = 0)
+        public Item(Guid Id, Category category, string name, string description, IEnumerable<string> tags, double unitPrice, int version = 0)
         {
             this.Id = Id;
             this.Version = version;
-            CategoryId = categoryId;
+            Category = category;
             Name = name;
             Description = description;
             Tags = tags;
@@ -30,9 +31,9 @@ namespace Domain.Entities
             UnitPrice = unitPrice;
         }
 
-        public static Item Create(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags,double unitPrice)
+        public static Item Create(Guid Id, Category category, string name, string description, IEnumerable<string> tags, double unitPrice)
         {
-            var item = new Item(Id, categoryId, name, description, tags, unitPrice);
+            var item = new Item(Id, category, name, description, tags, unitPrice);
             item.AddEvent(new ItemCreated(item));
             return item;
         }

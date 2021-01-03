@@ -1,6 +1,7 @@
 ﻿using Application.Exceptions;
 using Domain.Entities;
 using Domain.Repositories;
+using Domain.ValueObjects;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace Application.Commands
 {
     public class CreateItemCommand : IRequest
     {
-        public Guid Id { get; }
-        public Guid CategoryId { get; }
-        public string Name { get; }
-        public string Description { get; }
-        public double UnitPrice { get; }
-        public IEnumerable<string> Tags { get; }
+        public Guid Id { get; set; }
+        public Category Category { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double UnitPrice { get; set; }
+        public IEnumerable<string> Tags { get; set; }
 
         public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand>
         {
@@ -30,7 +31,8 @@ namespace Application.Commands
             public async Task<Unit> Handle(CreateItemCommand request, CancellationToken cancellationToken)
             {
                 if (await _repository.ExistsAsync(request.Id)) { throw new ItemAlreadyExistsException(request.Id); }
-                var item = Item.Create(request.Id, request.CategoryId, request.Name, request.Description, request.Tags, request.UnitPrice);
+                request.Id = request.Id == Guid.Empty ? Guid.NewGuid() : request.Id;
+                var item = Item.Create(request.Id, request.Category, request.Name, request.Description, request.Tags, request.UnitPrice);
                 await _repository.AddAsync(item);
                 //submit events later
                 return Unit.Value;
