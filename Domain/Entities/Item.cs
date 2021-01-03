@@ -9,6 +9,7 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public double UnitPrice { get; set; }
         private ISet<string> _tags = new HashSet<string>();
 
         public IEnumerable<string> Tags
@@ -17,7 +18,7 @@ namespace Domain.Entities
             private set => _tags = new HashSet<string>(value);
         }
 
-        public Item(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags, int version = 0)
+        public Item(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags, double unitPrice, int version = 0)
         {
             this.Id = Id;
             this.Version = version;
@@ -25,11 +26,13 @@ namespace Domain.Entities
             Name = name;
             Description = description;
             Tags = tags;
+            UnitPrice = unitPrice;
+            UnitPrice = unitPrice;
         }
 
-        public static Item Create(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags)
+        public static Item Create(Guid Id, Guid categoryId, string name, string description, IEnumerable<string> tags,double unitPrice)
         {
-            var item = new Item(Id, categoryId, name, description, tags);
+            var item = new Item(Id, categoryId, name, description, tags, unitPrice);
             item.AddEvent(new ItemCreated(item));
             return item;
         }

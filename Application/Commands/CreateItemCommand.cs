@@ -15,6 +15,7 @@ namespace Application.Commands
         public Guid CategoryId { get; }
         public string Name { get; }
         public string Description { get; }
+        public double UnitPrice { get; }
         public IEnumerable<string> Tags { get; }
 
         public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand>
@@ -29,7 +30,7 @@ namespace Application.Commands
             public async Task<Unit> Handle(CreateItemCommand request, CancellationToken cancellationToken)
             {
                 if (await _repository.ExistsAsync(request.Id)) { throw new ItemAlreadyExistsException(request.Id); }
-                var item = Item.Create(request.Id, request.CategoryId, request.Name, request.Description, request.Tags);
+                var item = Item.Create(request.Id, request.CategoryId, request.Name, request.Description, request.Tags, request.UnitPrice);
                 await _repository.AddAsync(item);
                 //submit events later
                 return Unit.Value;

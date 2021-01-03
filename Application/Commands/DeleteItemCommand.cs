@@ -2,8 +2,6 @@
 using Domain.Repositories;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,6 +19,7 @@ namespace Application.Commands
             {
                 _repository = repository;
             }
+
             public async Task<Unit> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
             {
                 var item = await _repository.GetAsync(request.Id);
