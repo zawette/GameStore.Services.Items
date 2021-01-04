@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Commands;
+﻿using Application.Commands;
+using Application.DTO;
+using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GameStore.Services.Items.Api.Controllers
 {
@@ -13,8 +13,6 @@ namespace GameStore.Services.Items.Api.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-
-
         private readonly IMediator _mediator;
 
         public ItemsController(IMediator mediator)
@@ -23,35 +21,37 @@ namespace GameStore.Services.Items.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<ItemDTO>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _mediator.Send(new GetAllItemsQuery());
+            return Ok(result);
         }
 
-        // GET api/<ItemsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ItemDTO>> Get(Guid id)
         {
-            return "value";
+            var result = await _mediator.Send(new GetItemQuery() { Id = id });
+
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateItemCommand command)
-        {   
+        {
             var result = await _mediator.Send(command);
             return NoContent();
         }
 
-        // PUT api/<ItemsController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ItemsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            var result = await _mediator.Send(new DeleteItemCommand() { Id = id });
+            return NoContent();
         }
     }
 }

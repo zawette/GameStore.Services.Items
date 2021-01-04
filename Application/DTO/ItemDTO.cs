@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Application.DTO
@@ -9,6 +10,7 @@ namespace Application.DTO
         public string Name { get; set; }
         public string Description { get; set; }
         public IEnumerable<string> Tags { get; set; }
-        public string Category { get; set; }
+        public Category Category { get; set; }
+        public double UnitPrice { get; set; }
     }
 }

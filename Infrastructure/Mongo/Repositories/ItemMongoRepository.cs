@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Mongo.Documents;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Infrastructure.Mongo.Repositories
 
         public ItemMongoRepository(IMongoDbSettings settings, IMongoClient mongoClient)
         {
+            BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+
             var database = mongoClient.GetDatabase(settings.DatabaseName);
             _items = database.GetCollection<ItemDocument>("Items");
         }
@@ -36,8 +39,8 @@ namespace Infrastructure.Mongo.Repositories
 
         public async Task<Item> GetAsync(Guid id)
         {
-            var itemDoc = await _items.Find(i => i.Id.Equals(id)).FirstOrDefaultAsync();
-            return itemDoc.asItem();
+            var itemDoc = await _items.Find(i => i.Id == id).FirstOrDefaultAsync();
+            return itemDoc?.asItem();
         }
 
         public Task UpdateAsync(Item resource)

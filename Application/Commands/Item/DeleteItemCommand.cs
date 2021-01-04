@@ -9,7 +9,7 @@ namespace Application.Commands
 {
     public class DeleteItemCommand : IRequest
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
         {
