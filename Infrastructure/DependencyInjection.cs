@@ -1,6 +1,8 @@
 ﻿using Domain.Repositories;
+using Infrastructure.Exceptions;
 using Infrastructure.Mongo;
 using Infrastructure.Mongo.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using System;
@@ -19,10 +21,19 @@ namespace Infrastructure
             return services;
         }
 
+        public static IServiceCollection AddErrorHandling(this IServiceCollection services)
+            => services.AddSingleton<IExceptionMapper, ExceptionMapper>()
+                       .AddTransient<ErrorHandlingMiddleware>();
+
+        public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
+            => app.UseMiddleware<ErrorHandlingMiddleware>();
+
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
-        {
-            services.AddMongo();
-            return services;
-        }
+            => services
+            .AddMongo()
+            .AddErrorHandling();
+
+        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
+            => app.UseErrorHandling();
     }
 }

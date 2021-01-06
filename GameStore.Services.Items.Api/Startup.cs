@@ -46,6 +46,8 @@ namespace GameStore.Services.Items.Api
 
             app.UseAuthorization();
 
+            app.UseInfrastructure();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
