@@ -28,7 +28,6 @@ namespace Domain.Entities
             Description = description;
             Tags = tags;
             UnitPrice = unitPrice;
-            UnitPrice = unitPrice;
         }
 
         public static Item Create(Guid Id, Category category, string name, string description, IEnumerable<string> tags, double unitPrice)
