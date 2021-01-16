@@ -23,7 +23,7 @@ namespace GameStore.Services.Items.Api
         {
             services
                 .AddApplication()
-                .AddInfrastructure();
+                .AddInfrastructure(Configuration);
             services
                 .AddControllers()
                 .AddJsonOptions(opts =>
