@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Events
+﻿using Domain.Entities;
+
+namespace Domain.Events
 {
     public class ItemDeleted : IDomainEvent
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.Queries
 {
-    public partial class GetAllItemsQuery : IRequest<IEnumerable<ItemDTO>>
+    public class GetAllItemsQuery : IRequest<IEnumerable<ItemDTO>>
     {
     }
 }

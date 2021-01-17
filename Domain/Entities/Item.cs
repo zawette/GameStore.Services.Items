@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Events;
+﻿using Domain.Events;
 using Domain.ValueObjects;
 using System;
 using System.Collections.Generic;

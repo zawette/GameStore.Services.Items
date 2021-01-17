@@ -8,22 +8,19 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.Handlers
 {
-    public partial class GetAllItemsQuery
+    public class GetAllItemsQueryHandler : IRequestHandler<GetAllItemsQuery, IEnumerable<ItemDTO>>
     {
-        public class GetAllItemsQueryHandler : IRequestHandler<GetAllItemsQuery, IEnumerable<ItemDTO>>
+        private IItemRepository _repository;
+
+        public GetAllItemsQueryHandler(IItemRepository repository)
         {
-            private IItemRepository _repository;
+            _repository = repository;
+        }
 
-            public GetAllItemsQueryHandler(IItemRepository repository)
-            {
-                _repository = repository;
-            }
-
-            public async Task<IEnumerable<ItemDTO>> Handle(GetAllItemsQuery request, CancellationToken cancellationToken)
-            {
-                var Items = await _repository.GetAllAsync();
-                return Items.Select(i => i.asItemDTO());
-            }
+        public async Task<IEnumerable<ItemDTO>> Handle(GetAllItemsQuery request, CancellationToken cancellationToken)
+        {
+            var Items = await _repository.GetAllAsync();
+            return Items.Select(i => i.asItemDTO());
         }
     }
 }

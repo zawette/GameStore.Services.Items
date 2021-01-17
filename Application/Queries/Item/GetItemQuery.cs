@@ -4,7 +4,7 @@ using System;
 
 namespace Application.Queries
 {
-    public partial class GetItemQuery : IRequest<ItemDTO>
+    public class GetItemQuery : IRequest<ItemDTO>
     {
         public Guid Id { get; set; }
     }

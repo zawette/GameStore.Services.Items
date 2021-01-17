@@ -1,8 +1,10 @@
-﻿using Domain.Repositories;
+﻿using Application.Services;
+using Domain.Repositories;
 using Infrastructure.Exceptions;
 using Infrastructure.Messaging;
 using Infrastructure.Mongo;
 using Infrastructure.Mongo.Repositories;
+using Infrastructure.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -24,9 +26,9 @@ namespace Infrastructure
             return services;
         }
 
-        public static IServiceCollection AddMessaging(this IServiceCollection services,IConfiguration config)
+        public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration config)
         {
-            services.Configure<RabbitMqSettings>(options=>config.GetSection("RabbitMqSettings"));
+            services.Configure<RabbitMqSettings>(options => config.GetSection("RabbitMqSettings"));
             services.AddMassTransit(x =>
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
@@ -40,6 +42,9 @@ namespace Infrastructure
                 }));
             });
             services.AddMassTransitHostedService();
+            services.AddSingleton<IEventMapper, EventMapper>();
+            services.AddTransient<IMessageBroker, MessageBroker>();
+            services.AddTransient<IEventProcessor, EventProcessor>();
             return services;
         }
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
@@ -49,7 +54,7 @@ namespace Infrastructure
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
             => app.UseMiddleware<ErrorHandlingMiddleware>();
 
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration config)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
             => services
             .AddMongo()
             .AddMessaging(config)

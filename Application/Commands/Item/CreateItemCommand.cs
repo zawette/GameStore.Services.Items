@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Application.Commands
 {
-    public partial class CreateItemCommand : IRequest
+    public class CreateItemCommand : IRequest
     {
         public Guid Id { get; set; }
         public Category Category { get; set; }
