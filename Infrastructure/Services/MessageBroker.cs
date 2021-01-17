@@ -23,9 +23,14 @@ namespace Infrastructure.Services
 
         public Task PublishAsync(params IEvent[] events)
             => PublishAsync(events?.AsEnumerable());
-        public Task PublishAsync(IEnumerable<IEvent> events)
+        public async Task PublishAsync(IEnumerable<IEvent> events)
         {
-            throw new NotImplementedException();
+            foreach (var @event in events)
+            {
+               Uri uri = new Uri($"rabbitmq://{_mqOptions.host}/{_mqOptions.queue}.{nameof(@event)}"); 
+               var endPoint = await _bus.GetSendEndpoint(uri);
+               await endPoint.Send(@event);
+            }
         }
     }
 }
