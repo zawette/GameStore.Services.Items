@@ -15,9 +15,9 @@ namespace Infrastructure.Services
        private readonly RabbitMqSettings _mqOptions ;
        private readonly IBus _bus;
 
-        public MessageBroker(IOptions<RabbitMqSettings> mqOptions, IBus bus)
+        public MessageBroker(RabbitMqSettings mqOptions, IBus bus)
         {
-            _mqOptions = mqOptions.Value;
+            _mqOptions = mqOptions;
             _bus = bus;
         }
 

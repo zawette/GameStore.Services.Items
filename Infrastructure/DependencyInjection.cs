@@ -9,6 +9,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 
@@ -29,15 +30,17 @@ namespace Infrastructure
         public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<RabbitMqSettings>(options => config.GetSection("RabbitMqSettings"));
+            services.AddSingleton<RabbitMqSettings>(sp=> sp.GetRequiredService<IOptions<RabbitMqSettings>>().Value);
             services.AddMassTransit(x =>
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
+                var rabbitMqSettings=provider.GetRequiredService<RabbitMqSettings>();
                     cfg.UseHealthCheck(provider);
-                    cfg.Host(new Uri("rabbitmq://localhost"), h =>
+                    cfg.Host(new Uri($"rabbitmq://{rabbitMqSettings.host}"), h =>
                                    {
-                                       h.Username("guest");
-                                       h.Password("guest");
+                                       h.Username(rabbitMqSettings.username);
+                                       h.Password(rabbitMqSettings.password);
                                    });
                 }));
             });
