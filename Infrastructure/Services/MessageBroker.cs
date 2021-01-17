@@ -27,7 +27,7 @@ namespace Infrastructure.Services
         {
             foreach (var @event in events)
             {
-               Uri uri = new Uri($"rabbitmq://{_mqOptions.host}/{_mqOptions.queue}.{nameof(@event)}"); 
+               Uri uri = new Uri($"rabbitmq://{_mqOptions.host}:{_mqOptions.port}/{_mqOptions.queue}.{nameof(@event)}"); 
                var endPoint = await _bus.GetSendEndpoint(uri);
                await endPoint.Send(@event);
             }

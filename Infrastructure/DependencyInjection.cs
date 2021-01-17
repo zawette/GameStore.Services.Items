@@ -37,7 +37,7 @@ namespace Infrastructure
                 {
                 var rabbitMqSettings=provider.GetRequiredService<RabbitMqSettings>();
                     cfg.UseHealthCheck(provider);
-                    cfg.Host(new Uri($"rabbitmq://{rabbitMqSettings.host}"), h =>
+                    cfg.Host(new Uri($"rabbitmq://{rabbitMqSettings.host}:{rabbitMqSettings.port}"), h =>
                                    {
                                        h.Username(rabbitMqSettings.username);
                                        h.Password(rabbitMqSettings.password);
