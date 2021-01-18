@@ -43,8 +43,11 @@ namespace GameStore.Services.Items.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateItemCommand command)
         {
+            command.Id=id;
+            var result = await _mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

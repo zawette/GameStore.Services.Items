@@ -22,6 +22,7 @@ namespace Application.Commands
         {
             var item = await _repository.GetAsync(request.Id);
             if (item is null) { throw new ItemNotFoundException(request.Id); }
+            item.Delete(item);
             await _repository.DeleteAsync(item.Id);
             await _eventProcessor.ProcessAsync(item.Events);
             return Unit.Value;

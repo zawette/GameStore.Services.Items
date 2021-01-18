@@ -36,6 +36,16 @@ namespace Domain.Entities
             item.AddEvent(new ItemCreated(item));
             return item;
         }
+        public static Item Update(Item item, Category category, string name, string description, IEnumerable<string> tags, double unitPrice)
+        {
+            item.Category = category;
+            item.Name = name;
+            item.Description = description;
+            item.Tags = tags;
+            item.UnitPrice = unitPrice;
+            item.AddEvent(new ItemModified(item));
+            return item;
+        }
 
         public void Delete(Item item)
         {
