@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Services;
 using Domain.Events;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
@@ -19,6 +19,7 @@ namespace Infrastructure.Services
             _logger = logger;
             _eventMapper = eventMapper;
         }
+
         public async Task ProcessAsync(IEnumerable<IDomainEvent> events)
         {
             if (events is null) { return; }

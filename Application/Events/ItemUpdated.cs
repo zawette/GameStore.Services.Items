@@ -1,6 +1,6 @@
+using Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
-using Domain.ValueObjects;
 
 namespace Application.Events
 {
@@ -22,6 +22,5 @@ namespace Application.Events
         public string Description { get; set; }
         public double UnitPrice { get; set; }
         public IEnumerable<string> Tags { get; set; }
-
     }
 }

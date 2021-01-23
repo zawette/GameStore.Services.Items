@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Application.Events;
 using Application.Services;
-using Domain.Entities;
 using Domain.Events;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.Services
 {

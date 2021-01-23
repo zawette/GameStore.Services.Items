@@ -1,5 +1,4 @@
-﻿using Domain.Exceptions;
-using System;
+﻿using System;
 
 namespace Domain.Exceptions
 {

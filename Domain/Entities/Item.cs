@@ -36,6 +36,7 @@ namespace Domain.Entities
             item.AddEvent(new ItemCreated(item));
             return item;
         }
+
         public static Item Update(Item item, Category category, string name, string description, IEnumerable<string> tags, double unitPrice)
         {
             item.Category = category;

@@ -9,7 +9,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 
@@ -38,7 +37,7 @@ namespace Infrastructure
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                // var rabbitMqSettings=provider.GetRequiredService<RabbitMqSettings>();
+                    // var rabbitMqSettings=provider.GetRequiredService<RabbitMqSettings>();
                     cfg.UseHealthCheck(provider);
                     cfg.Host(new Uri($"rabbitmq://{rMqSettings.host}:{rMqSettings.port}"), h =>
                                    {
@@ -53,6 +52,7 @@ namespace Infrastructure
             services.AddTransient<IEventProcessor, EventProcessor>();
             return services;
         }
+
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
             => services.AddSingleton<IExceptionMapper, ExceptionMapper>()
                        .AddTransient<ErrorHandlingMiddleware>();
@@ -65,7 +65,6 @@ namespace Infrastructure
             .AddMongo()
             .AddMessaging(config)
             .AddErrorHandling();
-
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
             => app.UseErrorHandling();
