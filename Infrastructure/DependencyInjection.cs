@@ -30,14 +30,11 @@ namespace Infrastructure
         {
             var rMqSettings = new RabbitMqSettings();
             config.GetSection("RabbitMqSettings").Bind(rMqSettings);
-            // services.Configure<RabbitMqSettings>(options => config.GetSection("RabbitMqSettings"));
-            // services.AddSingleton<RabbitMqSettings>(sp=> sp.GetRequiredService<IOptions<RabbitMqSettings>>().Value);
             services.AddSingleton<RabbitMqSettings>(rMqSettings);
             services.AddMassTransit(x =>
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    // var rabbitMqSettings=provider.GetRequiredService<RabbitMqSettings>();
                     cfg.UseHealthCheck(provider);
                     cfg.Host(new Uri($"rabbitmq://{rMqSettings.host}:{rMqSettings.port}"), h =>
                                    {
