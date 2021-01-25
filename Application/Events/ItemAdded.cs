@@ -1,8 +1,9 @@
+using MediatR;
 using System;
 
 namespace Application.Events
 {
-    public class ItemAdded : IEvent
+    public class ItemAdded : IEvent, IRequest
     {
         public Guid Id { get; set; }
 

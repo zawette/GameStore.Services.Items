@@ -27,9 +27,10 @@ namespace Infrastructure.Services
         {
             foreach (var @event in events)
             {
-                Uri uri = new Uri($"exchange:{_mqOptions.queue}.{@event.GetType().Name}");
-                var endPoint = await _bus.GetSendEndpoint(uri);
-                await endPoint.Send(@event);
+                //Uri uri = new Uri($"exchange:{@event.GetType().Name}?bind=true&queue={_mqOptions.queue}.{@event.GetType().Name}");
+                //var endPoint = await _bus.GetSendEndpoint(uri);
+                var type = @event.GetType();
+                await _bus.Publish(@event,type);
             }
         }
     }
