@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY *.sln .
 COPY GameStore.Services.Items.Api/*.csproj GameStore.Services.Items.Api/
-COPY Application/*.csproj Apllcation/
+COPY Application/*.csproj Application/
 COPY Domain/*.csproj Domain/
 COPY Infrastructure/*.csproj Infrastructure/
 RUN dotnet restore 
